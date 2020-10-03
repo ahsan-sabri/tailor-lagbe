@@ -61,7 +61,7 @@
                     <div class="info">
                         <a href="{{ route('admin') }}" class="d-block">
                             {{ ucfirst(trans(Auth::user()->name)) }}
-                            <p>{{ ucfirst(trans(Auth::user()->type)) }}</p>
+                            <p>{{ ucfirst(trans(Auth::user()->user_type)) }}</p>
                         </a>
                     </div>
                 </div>

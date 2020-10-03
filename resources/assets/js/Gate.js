@@ -6,20 +6,26 @@ export default class Gate{
 
 
     isAdmin(){
-        return this.user.type === 'admin';
+        return this.user.user_type === 'admin';
     }
 
-    isUser(){
-        return this.user.type === 'user';
+    isCustomer(){
+        return this.user.user_type === 'customer';
     }
-    isAdminOrAuthor(){
-        if(this.user.type === 'admin' || this.user.type === 'author'){
+    isAdminOrTailor(){
+        if(this.user.user_type === 'admin' || this.user.user_type === 'tailor'){
             return true;
         }
 
     }
-    isAuthorOrUser(){
-        if(this.user.type === 'user' || this.user.type === 'author'){
+    isAdminOrStore(){
+        if(this.user.user_type === 'admin' || this.user.user_type === 'store'){
+            return true;
+        }
+
+    }
+    isAuthorOrCustomer(){
+        if (this.user.user_type === 'user' || this.user.user_type === 'customer'){
             return true;
         }
 

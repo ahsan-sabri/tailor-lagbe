@@ -48,10 +48,29 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        $roles = config('constants.roles');
+        unset($roles['admin']);
+        $rolesKeyList = array_keys($roles);
+        $rolesStr = implode(",", $rolesKeyList);
+        unset($roles['customer']);
+        $nonCustomerRolesKeyList = array_keys($roles);
+        $nonCustomerRolesStr = implode(",", $nonCustomerRolesKeyList);
+        $storeRole = 'store';
+        // dd($rolesStr, $nonCustomerRolesStr);
+
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'mobile' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10|max:15|unique:users',
+            'user_type' => 'required|string|max:100|in:'.$rolesStr,
+            'owner_name'  => 'required_if:user_type,==,'.$storeRole. '|nullable|string|max:255',
+            'shop_name'  => 'required_if:user_type,in:'.$nonCustomerRolesStr. '|nullable|string|max:255',
+            'service'  => 'required_if:user_type,in:'.$nonCustomerRolesStr.'|nullable|integer',
+            'location'  => 'required_if:user_type,in:' . $nonCustomerRolesStr . '|nullable|string|max:255',
+            'tin'  => 'required_if:user_type,in:' . $nonCustomerRolesStr . '|nullable|string|max:255',
+            'website'  => 'nullable|string|max:255',
             'password' => 'required|string|min:6|confirmed',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048|nullable',
         ]);
     }
 
@@ -63,10 +82,13 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        // dd($data);
+        $data['password'] = Hash::make($data['password']);
+
+        return User::create($data
+            // 'name' => $data['name'],
+            // 'email' => $data['email'],
+            // 'password' => Hash::make($data['password']),
+        );
     }
 }

@@ -12,7 +12,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
     <link rel="shortcut icon" href="{{ asset('img/logo.png') }}" type="image/x-icon" />
 
@@ -22,6 +22,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @yield('styles')
 </head>
 
 <body>
@@ -94,6 +95,9 @@
             @yield('content')
         </main>
     </div>
+
+    <script src="{{ asset('https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.min.js') }}"></script>
+    @yield('scripts')
 </body>
 
 </html>
